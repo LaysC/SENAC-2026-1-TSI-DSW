@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bravo | Login</title>
+    <title>Bravo | Registro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -72,43 +72,44 @@
         }
 
         /* Remove browser autofill background */
-            input:-webkit-autofill,
-            input:-webkit-autofill:hover,
-            input:-webkit-autofill:focus,
-            input:-webkit-autofill:active {
-                -webkit-box-shadow: 0 0 0 30px white inset !important;
-                -webkit-text-fill-color: #0f172a !important;
-                transition: background-color 5000s ease-in-out 0s;
-            }
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus,
+        input:-webkit-autofill:active {
+            -webkit-box-shadow: 0 0 0 30px white inset !important;
+            -webkit-text-fill-color: #0f172a !important;
+            transition: background-color 5000s ease-in-out 0s;
+        }
     </style>
 </head>
 
 <body
     class="bg-white min-h-screen flex items-center justify-center p-8 font-sans text-slate-900 antialiased selection:bg-brand-200 selection:text-brand-900 bg-grid">
 
-    <!-- Login Container -->
+    <!-- Register Container -->
     <main
-        class="w-full max-w-[400px] relative z-10 bg-white border-2 border-slate-900 p-10 shadow-[8px_8px_0px_0px_rgba(15,23,42,0.05)]">
+        class="w-full max-w-[450px] relative z-10 bg-white border-2 border-slate-900 p-8 sm:p-10 shadow-[8px_8px_0px_0px_rgba(15,23,42,0.05)] my-8">
 
         <!-- Header -->
-        <div class="mb-10">
+        <div class="mb-8">
             <!-- Brand -->
             <div class="flex items-center gap-3 mb-8">
                 <img src="/assets/logo.svg" alt="Logo do grupo Bravo" class="w-10 h-10">
                 <span class="text-2xl font-bold text-slate-900 tracking-tight">Bravo</span>
             </div>
 
-            <h2 class="text-2xl font-bold text-slate-900 mb-2 tracking-tight">Acesso ao Sistema</h2>
+            <h2 class="text-2xl font-bold text-slate-900 mb-2 tracking-tight">Crie sua Conta</h2>
             <div class="w-12 h-1 bg-brand-600 mb-4"></div>
-            <p class="text-slate-500 text-sm font-medium">Insira suas credenciais para inicializar sua sessão.</p>
+            <p class="text-slate-500 text-sm font-medium">Preencha os dados abaixo para se registrar no sistema.</p>
         </div>
 
         <!-- Form -->
-        <form action="#" class="space-y-6">
+        <form action="#" class="space-y-5">
+
             <!-- Username -->
             <div class="space-y-2">
                 <label for="username" class="block text-sm font-bold text-slate-900">
-                    Usuário
+                    Nome de Usuário
                 </label>
                 <div class="relative group">
                     <div
@@ -121,23 +122,61 @@
                 </div>
             </div>
 
-            <!-- Password -->
+            <!-- Email -->
             <div class="space-y-2">
-                <label for="password" class="block text-sm font-bold text-slate-900">
-                    Senha
+                <label for="email" class="block text-sm font-bold text-slate-900">
+                    E-mail
                 </label>
                 <div class="relative group">
                     <div
                         class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 group-focus-within:text-brand-600 transition-colors">
-                        <i class="ph ph-lock-key text-lg"></i>
+                        <i class="ph ph-envelope-simple text-lg"></i>
                     </div>
-                    <input type="password" id="password"
-                        class="input-field w-full border-2 border-slate-200 bg-white py-3 pl-10 pr-10 text-slate-900 placeholder-slate-400 text-sm font-medium"
-                        placeholder="••••••••" required>
-                    <button type="button" id="toggle-password"
-                        class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-brand-600 transition-colors focus:outline-none">
-                        <i class="ph ph-eye text-lg"></i>
-                    </button>
+                    <input type="email" id="email"
+                        class="input-field w-full border-2 border-slate-200 bg-white py-3 pl-10 pr-3 text-slate-900 placeholder-slate-400 text-sm font-medium"
+                        placeholder="joao@exemplo.com" required autocomplete="email">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <!-- Password -->
+                <div class="space-y-2">
+                    <label for="password" class="block text-sm font-bold text-slate-900">
+                        Senha
+                    </label>
+                    <div class="relative group">
+                        <div
+                            class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 group-focus-within:text-brand-600 transition-colors">
+                            <i class="ph ph-lock-key text-lg"></i>
+                        </div>
+                        <input type="password" id="password"
+                            class="input-field w-full border-2 border-slate-200 bg-white py-3 pl-10 pr-10 text-slate-900 placeholder-slate-400 text-sm font-medium"
+                            placeholder="••••••••" required>
+                        <button type="button" id="toggle-password"
+                            class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-brand-600 transition-colors focus:outline-none">
+                            <i class="ph ph-eye text-lg"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="space-y-2">
+                    <label for="confirm-password" class="block text-sm font-bold text-slate-900">
+                        Confirmar Senha
+                    </label>
+                    <div class="relative group">
+                        <div
+                            class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 group-focus-within:text-brand-600 transition-colors">
+                            <i class="ph ph-lock-key text-lg"></i>
+                        </div>
+                        <input type="password" id="confirm-password"
+                            class="input-field w-full border-2 border-slate-200 bg-white py-3 pl-10 pr-10 text-slate-900 placeholder-slate-400 text-sm font-medium"
+                            placeholder="••••••••" required>
+                        <button type="button" id="toggle-confirm-password"
+                            class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-brand-600 transition-colors focus:outline-none">
+                            <i class="ph ph-eye text-lg"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -145,17 +184,17 @@
             <div class="pt-4">
                 <button type="submit"
                     class="btn-primary w-full bg-brand-600 text-white font-bold py-3.5 px-4 flex justify-center items-center gap-2 text-sm border-2 border-brand-800 tracking-wider">
-                    <span>AUTENTICAR</span>
-                    <i class="ph ph-sign-in text-lg"></i>
+                    <span>CADASTRAR</span>
+                    <i class="ph ph-user-plus text-lg"></i>
                 </button>
             </div>
-
-            <!-- Register Link -->
+            
+            <!-- Login Link -->
             <div class="text-center pt-2">
                 <p class="text-sm font-medium text-slate-500">
-                    Não possui uma conta? 
-                    <a href="register/index.html" class="text-brand-600 hover:text-brand-800 font-bold underline decoration-2 underline-offset-2 transition-colors">
-                        Registre-se
+                    Já possui uma conta? 
+                    <a href="../index.html" class="text-brand-600 hover:text-brand-800 font-bold underline decoration-2 underline-offset-2 transition-colors">
+                        Faça login
                     </a>
                 </p>
             </div>
@@ -164,7 +203,7 @@
     </main>
 
     <script>
-        // Toggle password visibility
+        // Toggle password visibility for main password field
         const togglePassword = document.getElementById('toggle-password');
         const passwordInput = document.getElementById('password');
         const eyeIcon = togglePassword.querySelector('i');
@@ -177,6 +216,22 @@
                 eyeIcon.classList.replace('ph-eye', 'ph-eye-slash');
             } else {
                 eyeIcon.classList.replace('ph-eye-slash', 'ph-eye');
+            }
+        });
+
+        // Toggle password visibility for confirm password field
+        const toggleConfirmPassword = document.getElementById('toggle-confirm-password');
+        const confirmPasswordInput = document.getElementById('confirm-password');
+        const confirmEyeIcon = toggleConfirmPassword.querySelector('i');
+
+        toggleConfirmPassword.addEventListener('click', function (e) {
+            const type = confirmPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            confirmPasswordInput.setAttribute('type', type);
+
+            if (type === 'text') {
+                confirmEyeIcon.classList.replace('ph-eye', 'ph-eye-slash');
+            } else {
+                confirmEyeIcon.classList.replace('ph-eye-slash', 'ph-eye');
             }
         });
     </script>
