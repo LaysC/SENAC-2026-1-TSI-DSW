@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"encoding/json"
 	"errors"
+	"log"
 	"net/http"
 	"strconv"
 )
@@ -39,6 +40,7 @@ func (app *App) createUser(w http.ResponseWriter, r *http.Request) {
 			writeError(w, http.StatusConflict, "email já cadastrado")
 			return
 		}
+		log.Printf("erro ao criar usuário: %v", err)
 		writeError(w, http.StatusInternalServerError, "erro ao criar usuário")
 		return
 	}
@@ -55,6 +57,40 @@ func (app *App) createUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	writeJSON(w, http.StatusCreated, user)
+}
+
+// POST /api/v1/users/login
+func (app *App) loginHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		writeError(w, http.StatusMethodNotAllowed, "método não permitido")
+		return
+	}
+
+	var req struct {
+		Name     string `json:"name"`
+		Password string `json:"password"`
+	}
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		writeError(w, http.StatusBadRequest, "corpo da requisição inválido")
+		return
+	}
+
+	var user User
+	var password string
+	err := app.db.QueryRow(
+		"SELECT user_id, name, email, password, created_at, updated_at FROM users WHERE name = ?", req.Name,
+	).Scan(&user.UserID, &user.Name, &user.Email, &password, &user.CreatedAt, &user.UpdatedAt)
+	if err != nil {
+		writeError(w, http.StatusUnauthorized, "usuário ou senha inválidos")
+		return
+	}
+
+	if password != req.Password {
+		writeError(w, http.StatusUnauthorized, "usuário ou senha inválidos")
+		return
+	}
+
+	writeJSON(w, http.StatusOK, user)
 }
 
 // GET /api/v1/users
