@@ -31,7 +31,13 @@ func main() {
 	// /api/v1/tasks/{id} -> GET | PUT | DELETE
 	mux.HandleFunc("/api/v1/tasks/", app.taskItemHandler)
 
-	// 4. Configuração do CORS (O segredo para o JS funcionar)
+	// 4. Registra as rotas de usuários
+	// /api/v1/users -> GET (listar) | POST (criar)
+	mux.HandleFunc("/api/v1/users", app.usersCollectionHandler)
+	// /api/v1/users/{id} -> GET | DELETE
+	mux.HandleFunc("/api/v1/users/", app.userItemHandler)
+
+	// 5. Configuração do CORS (O segredo para o JS funcionar)
 	// Isso permite que o seu Frontend acesse a API mesmo estando em portas diferentes
 	c := cors.New(cors.Options{
 		AllowedOrigins:   []string{"*"}, // Permite qualquer origem para teste local
@@ -43,10 +49,10 @@ func main() {
 	// Envolve o roteador com o middleware de CORS
 	handler := c.Handler(mux)
 
-	// 5. Inicia o servidor
+	// 6. Inicia o servidor
 	port := getEnv("PORT", "8080")
 	log.Printf("🚀 Servidor Bravo rodando na porta %s", port)
-	
+
 	if err := http.ListenAndServe(":"+port, handler); err != nil {
 		log.Fatalf("erro ao iniciar servidor: %v", err)
 	}
@@ -79,6 +85,36 @@ func (app *App) taskItemHandler(w http.ResponseWriter, r *http.Request) {
 		app.updateTask(w, r)
 	case http.MethodDelete:
 		app.deleteTask(w, r)
+	default:
+		writeError(w, http.StatusMethodNotAllowed, "método não permitido")
+	}
+}
+
+// Handler para a coleção de usuários (/api/v1/users)
+func (app *App) usersCollectionHandler(w http.ResponseWriter, r *http.Request) {
+	switch r.Method {
+	case http.MethodGet:
+		app.listUsers(w, r)
+	case http.MethodPost:
+		app.createUser(w, r)
+	default:
+		writeError(w, http.StatusMethodNotAllowed, "método não permitido")
+	}
+}
+
+// Handler para itens individuais (/api/v1/users/{id})
+func (app *App) userItemHandler(w http.ResponseWriter, r *http.Request) {
+	idStr := extractIDFromPath(r.URL.Path)
+	if idStr == "" || strings.TrimSpace(idStr) == "" {
+		writeError(w, http.StatusBadRequest, "id não informado")
+		return
+	}
+
+	switch r.Method {
+	case http.MethodGet:
+		app.getUser(w, r)
+	case http.MethodDelete:
+		app.deleteUser(w, r)
 	default:
 		writeError(w, http.StatusMethodNotAllowed, "método não permitido")
 	}
